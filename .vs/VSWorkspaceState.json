@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\back",
+    "\\front",
+    "\\front\\src",
+    "\\front\\src\\app",
+    "\\front\\src\\app\\modals",
+    "\\front\\src\\app\\modals\\ajout-obj"
+  ],
+  "SelectedNode": "\\front\\src\\app\\app.module.ts",
+  "PreviewInSolutionExplorer": false
+}

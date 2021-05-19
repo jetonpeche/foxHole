@@ -1,0 +1,49 @@
+<h2 mat-dialog-title>Ajouter object(s)</h2>
+
+<mat-dialog-content>
+
+  <form #e="ngForm" class="container-fluid">
+
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Nombre object : </mat-label>
+      <input #nb matInput name="nbObj" (keyup)="AjouterInput(+nb.value)" type="number" ngModel required>
+    </mat-form-field>
+
+    <div *ngFor="let element of listeInput; let i = index">
+
+      <h2>Item n° {{ i + 1 }}</h2>
+      <br>
+
+      <!-- type object -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Type de l'object</mat-label>
+        <mat-select #selectType [name]="element.nameTypeObj" ngModel required>
+          <mat-option value="1">Arme</mat-option>
+          <mat-option value="2">Equipement</mat-option>
+          <mat-option value="3">Explosif</mat-option>
+          <mat-option value="4">Medical</mat-option>
+          <mat-option value="5">Munition</mat-option>
+          <mat-option value="6">Ressource</mat-option>
+          <mat-option value="7">Véhicule</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- nom object -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nom</mat-label>
+        <input #nom matInput [name]="element.nameObj" type="text" placeholder="Nom de l'object" maxlength="50" ngModel required>
+        <mat-hint align="end">{{ nom.value.length }} / 50</mat-hint>
+      </mat-form-field>
+
+      <!-- id faction -->
+      <mat-checkbox *ngIf="PossedeFaction(selectType.value)" [name]="element.nameCheck" labelPosition="before" color="primary" ngModel>J'appartiens aux wardens ?</mat-checkbox>
+
+    </div>
+  </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="AjouterItem(e)" [disabled]="e.invalid">Ajouter</button>&nbsp;
+  <button mat-button mat-dialog-close color="warn">Fermer</button>
+</mat-dialog-actions>
