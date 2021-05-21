@@ -5,7 +5,9 @@
                [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLinkActive="active"></a>
+      <a mat-list-item (click)="PopUpAjoutObj()" routerLinkActive="active">Ajouter item(s)</a>
+      <a mat-list-item (click)="PopUpAjoutListe()" routerLinkActive="active">Créer nouvelle liste</a>
+      <a mat-list-item routerLink="massFactory" routerLinkActive="active">mass factory</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

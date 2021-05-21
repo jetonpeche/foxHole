@@ -1,1 +1,52 @@
-<p>ajout-list works!</p>
+<h2 mat-dialog-title>Ajouter une liste</h2>
+
+<mat-dialog-content>
+
+  <form #e="ngForm" class="container-fluid">
+
+    <!-- nom liste -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Nom: </mat-label>
+      <input matInput #input name="nomListe" type="text" maxlength="50" ngModel required>
+      <mat-hint align="end">{{input.value?.length || 0}} / 50</mat-hint>
+    </mat-form-field>
+
+    <!-- faction -->
+    <mat-radio-group (change)="GenererListeItem()" color="primary" name="idFaction" [(ngModel)]="idFaction">
+        <mat-radio-button *ngFor="let element of listeFaction" [value]="element.idFaction">{{ element.nomFaction }}</mat-radio-button>
+    </mat-radio-group>
+
+    <br>
+
+    <!-- type object -->
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Type de l'objet</mat-label>
+        <mat-select (selectionChange)="GenererListeItem()" name="idType" [(ngModel)]="idType">
+            <mat-option *ngFor="let element of listeType" [value]="element.idType">{{ element.nomType }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <p>Choisissez la quantité a produire pour tout les items selectionné</p>
+
+    <!-- qte général -->
+    <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Qte général: </mat-label>
+        <input matInput name="qte" type="number" ngModel="0">
+    </mat-form-field>
+
+    <p>Choisissez les items que vous voulez ajouter</p>
+
+    <!-- affichage unites de la nation du commandant choisi -->
+    <section class="row">
+        <div class="col-md-4 col-xs-12" *ngFor="let element of listeItem">
+          <mat-checkbox color="primary" (change)="ClickCheckBox(element.idItem, $event.checked)" [checked]="EstSelectionner(element.idItem)">{{ element.nomItem }}</mat-checkbox>
+        </div>
+    </section>
+  </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="AjouterListe(e)" [disabled]="e.invalid">Ajouter</button>&nbsp;
+  <button mat-button mat-dialog-close color="warn">Fermer</button>
+</mat-dialog-actions>

@@ -7,7 +7,12 @@ import { Faction } from '../type/faction';
 @Injectable({
   providedIn: 'root'
 })
-export class FactoryService
-{
+export class FactionService {
+
   constructor(private http: HttpClient) { }
+
+  ListerFaction(): Observable<Faction[]>
+  {
+    return this.http.get<Faction[]>(`${environment.url}/faction/listerFaction.php`);
+  }
 }

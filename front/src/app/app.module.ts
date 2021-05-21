@@ -27,6 +27,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 // components
 import { FactoryComponent } from './components/factory/factory.component';
@@ -42,6 +43,7 @@ import { AjoutObjListComponent } from './modals/ajout-obj-list/ajout-obj-list.co
 
 // permet de donner la possibilité de refrech la page en mode prod en ajoutant un # sur URL
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { MassFactoryComponent } from './components/mass-factory/mass-factory.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     FactoryComponent,
     AjoutListComponent,
     AjoutObjComponent,
-    AjoutObjListComponent
+    AjoutObjListComponent,
+    MassFactoryComponent
   ],
   imports: [
     BrowserModule,
@@ -75,6 +78,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     MatCardModule,
     MatTabsModule,
     MatMenuModule,
+    MatPaginatorModule,
     ToastrModule.forRoot(
       {
         timeOut: 4000,

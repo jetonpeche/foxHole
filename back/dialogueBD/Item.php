@@ -5,54 +5,37 @@ require_once '../../connexionBDD.php';
 
 class Item
 {
+    public function ListerItem()
+    {
+        $conn = ConnexionBDD::getConnexion();
+
+        $sql = "SELECT i.*, nomFaction, nomType FROM item i JOIN faction f ON i.idFaction = f.idFaction JOIN typeItem ti ON i.idType = ti.idType";
+        $sth = $conn->prepare($sql);
+        $sth->execute(array());
+        $liste = $sth->fetchAll();
+            
+        return $liste;
+    }
+
+    public function ListerTypeItem()
+    {
+        $conn = ConnexionBDD::getConnexion();
+
+        $sql = "SELECT * FROM typeItem";
+        $sth = $conn->prepare($sql);
+        $sth->execute(array());
+        $liste = $sth->fetchAll();
+            
+        return $liste;
+    }
+
     public function AjouterItem($type, $nom, $faction)
     {
         $conn = ConnexionBDD::getConnexion();
 
-        switch ($type) 
-        {
-            case '1':
-                $sql = "INSERT INTO arme (nomArme, idFaction) VALUES (?, ?)";
-                $sth = $conn->prepare($sql);
-                $sth->execute(array($nom, $faction));
-            break;
-            
-            case '2':
-                $sql = "INSERT INTO equipement (nomEquipement) VALUES (?)";
-                $sth = $conn->prepare($sql);
-                $sth->execute(array($nom));
-            break;
-
-            case '3':
-                $sql = "INSERT INTO explosif (nomExplosif, idFaction) VALUES (?, ?)";
-                $sth = $conn->prepare($sql);
-                $sth->execute(array($nom, $faction));
-            break;
-
-            case '4':
-                $sql = "INSERT INTO medic (nomMedic) VALUES (?)";
-                $sth = $conn->prepare($sql);
-                $sth->execute(array($nom));
-            break;
-
-            case '5':
-                $sql = "INSERT INTO munition (nomMunition) VALUES (?)";
-                $sth = $conn->prepare($sql);
-                $sth->execute(array($nom));
-            break;
-
-            case '6':
-                $sql = "INSERT INTO ressource (nomRessource) VALUES (?)";
-                $sth = $conn->prepare($sql);
-                $sth->execute(array($nom));
-            break;
-
-            case '7':
-                $sql = "INSERT INTO vehicule (nomVehicule, idFaction) VALUES (?, ?)";
-                $sth = $conn->prepare($sql);
-                $sth->execute(array($nom, $faction));
-            break;
-        }
+        $sql = "INSERT INTO item (idType, nomItem, idFaction) VALUES (?, ?, ?)";
+        $sth = $conn->prepare($sql);
+        $sth->execute(array($type, $nom, $faction));
     }
 }
 ?>
