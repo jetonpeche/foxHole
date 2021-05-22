@@ -29,6 +29,8 @@
 
             "listeItem" => $listeItem
         ));
+
+        $listeItem = array();
     }
 
     echo json_encode($listeRetour);

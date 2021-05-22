@@ -26,22 +26,40 @@
         </mat-select>
     </mat-form-field>
 
-    <p>Choisissez la quantité a produire pour tout les items selectionné</p>
-
-    <!-- qte général -->
-    <mat-form-field class="full-width" appearance="outline">
-        <mat-label>Qte général: </mat-label>
-        <input matInput name="qte" type="number" ngModel="0">
-    </mat-form-field>
-
     <p>Choisissez les items que vous voulez ajouter</p>
 
-    <!-- affichage unites de la nation du commandant choisi -->
-    <section class="row">
-        <div class="col-md-4 col-xs-12" *ngFor="let element of listeItem">
-          <mat-checkbox color="primary" (change)="ClickCheckBox(element.idItem, $event.checked)" [checked]="EstSelectionner(element.idItem)">{{ element.nomItem }}</mat-checkbox>
-        </div>
-    </section>
+    <!-- affichage des item de la nation -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Nom</th>
+          <th scope="col">Quantité</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let element of listeItem">
+          <th scope="row">{{ element.nomItem }}</th>
+          <td>
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Quantité: </mat-label>
+              <input #inputQte matInput type="number">
+            </mat-form-field>
+          </td>
+          <td>
+
+            <!-- btn ajouter -->
+            <button *ngIf="!EstSelectionner(element.idItem)" mat-fab color="primary" (click)="AjouterItem(inputQte.value, element.idItem)">
+              <mat-icon>add</mat-icon>
+            </button>
+
+            <!-- btn supprimer -->
+            <button *ngIf="EstSelectionner(element.idItem)" mat-fab color="warn" (click)="SupprimerItem(element.idItem)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+    </table>
   </form>
 
 </mat-dialog-content>

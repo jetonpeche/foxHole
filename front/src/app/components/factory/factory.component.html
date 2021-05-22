@@ -9,7 +9,8 @@
 </div>
 <br>
 <div class="container-fluid">
-    <!-- type object -->
+    
+    <!-- nom liste -->
     <mat-form-field appearance="outline" class="full-width">
         <mat-label>Nom de la liste</mat-label>
         <mat-select (selectionChange)="ListerObj($event.value)">
@@ -19,7 +20,7 @@
         </mat-select>
     </mat-form-field>
 
-    <!-- liste à produire -->
+    <!-- liste des items de la liste -->
     <div *ngIf="listeObj.length != 0">
         <table class="table">
             <thead style="background-color: white;">

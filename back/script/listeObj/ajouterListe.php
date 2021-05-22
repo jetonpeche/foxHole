@@ -6,7 +6,6 @@
     $json = json_decode($json);
 
     $nomListe = strip_tags($json->nomListe);
-    $qte = strip_tags($json->qte);
 
     $listeItem = $json->listeItem;
 
@@ -20,7 +19,7 @@
         {
             foreach ($listeItem as $element)
             {
-                $diag->AjouterListeObj(strip_tags($element->idItem), $id, $qte);
+                $diag->AjouterListeObj(strip_tags($element->idItem), $id, strip_tags($element->qte));
             }
         }
     }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MatListOption } from '@angular/material/list';
 import { ToastrService } from 'ngx-toastr';
 import { ListeService } from 'src/app/services/liste.service';
 import { Faction } from 'src/app/type/faction';
@@ -77,16 +76,21 @@ export class AjoutListComponent implements OnInit
     return ITEM != null ? true : false;
   }
 
-  ClickCheckBox(_idItem: string, _estCocher: boolean)
-  {
-    if(_estCocher)
+  AjouterItem(_qte: string, _idItem: string): void
+  { 
+    if(+_qte > 0 && _qte != "")
     {
-      this.listeItemValide.push({ idItem: _idItem });
+      this.listeItemValide.push({ idItem: _idItem, qte: _qte });
     }
     else
     {
-      const INDEX = this.listeItemValide.findIndex(item => item.idItem == _idItem);
-      this.listeItemValide.splice(INDEX, 1);
+      this.toastrServ.warning("La quantité n'est pas bonne", "Quantité incorrect");
     }
+  }
+
+  SupprimerItem(_idItem: string): void
+  {
+    const INDEX = this.listeItemValide.findIndex(item => item.idItem == _idItem);
+    this.listeItemValide.splice(INDEX, 1);
   }
 }

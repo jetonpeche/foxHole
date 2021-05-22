@@ -81,9 +81,12 @@ export class FactoryComponent implements OnInit, AfterViewInit
           {
             const INDEX = this.listeObj.findIndex(item => item.idItem == _idItem);
             this.listeObj.splice(INDEX, 1);
+
+            this.toastrServ.success("L'item est supprimé de la liste", "MAJ liste");
           }
           else
           {
+            this.toastrServ.success("La quantité est mise à jour", "MAJ quantité");
             ITEM.qte = QTE_RESTANTE;
           }
         },
@@ -101,7 +104,7 @@ export class FactoryComponent implements OnInit, AfterViewInit
 
   PopUpAjoutObj(): void
   {
-    const DIALOG_REF = this.dialog.open(AjoutObjComponent, { disableClose: true });
+    const DIALOG_REF = this.dialog.open(AjoutObjComponent);
     DIALOG_REF.afterClosed().subscribe(
       () =>
       {
@@ -113,7 +116,7 @@ export class FactoryComponent implements OnInit, AfterViewInit
 
   PopUpAjoutListe(): void
   {
-    const DIALOG_REF = this.dialog.open(AjoutListComponent, { disableClose: true });
+    const DIALOG_REF = this.dialog.open(AjoutListComponent);
     DIALOG_REF.afterClosed().subscribe(
       () =>
       {
