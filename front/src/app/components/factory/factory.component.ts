@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { AjoutListComponent } from 'src/app/modals/ajout-list/ajout-list.component';
+import { AjoutObjListComponent } from 'src/app/modals/ajout-obj-list/ajout-obj-list.component';
 import { AjoutObjComponent } from 'src/app/modals/ajout-obj/ajout-obj.component';
 import { FactionService } from 'src/app/services/faction.service';
 import { ItemService } from 'src/app/services/item.service';
@@ -54,7 +55,6 @@ export class FactoryComponent implements OnInit, AfterViewInit
   {
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = "#D9D9D9";
   }
-
 
   ListerObj(_id: string): void
   {
@@ -121,6 +121,11 @@ export class FactoryComponent implements OnInit, AfterViewInit
           this.ListerListeObj();
       }
     );
+  }
+
+  PopUpAjoutObjListe(): void
+  {
+    this.dialog.open(AjoutObjListComponent, { data: { liste: this.listeListeNom, listeObj: this.listeObj }});
   }
 
   private ListerItem(): void

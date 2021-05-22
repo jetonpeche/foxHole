@@ -4,3 +4,31 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .full-width { width: 100%; }
+
+.titre
+{
+    text-align: center;
+    background-color: #404040;
+}
+
+.titre h2
+{
+    letter-spacing: 1px;
+    color: whitesmoke;
+    padding-top: 1%;
+}
+
+.blanc
+{
+    background-color: white;
+}
+
+.gris
+{
+    background-color: #F2F2F2;
+}
+
+button
+{
+    letter-spacing: 1px;
+}

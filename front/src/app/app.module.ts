@@ -45,6 +45,9 @@ import { AjoutObjListComponent } from './modals/ajout-obj-list/ajout-obj-list.co
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { ListeService } from './services/liste.service';
 import { FactionService } from './services/faction.service';
+import { DepotComponent } from './components/depot/depot.component';
+import { DepotService } from './services/depot.service';
+import { AjoutDepotComponent } from './modals/ajout-depot/ajout-depot.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +55,9 @@ import { FactionService } from './services/faction.service';
     FactoryComponent,
     AjoutListComponent,
     AjoutObjComponent,
-    AjoutObjListComponent
+    AjoutObjListComponent,
+    DepotComponent,
+    AjoutDepotComponent
   ],
   imports: [
     BrowserModule,
@@ -89,8 +94,8 @@ import { FactionService } from './services/faction.service';
     )
   ],
 
-  entryComponents: [AjoutListComponent, AjoutObjComponent, AjoutObjListComponent],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, FactoryService, ItemService, ListeService, FactionService],
+  entryComponents: [AjoutListComponent, AjoutObjComponent, AjoutObjListComponent, AjoutDepotComponent],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, FactoryService, ItemService, ListeService, FactionService, DepotService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

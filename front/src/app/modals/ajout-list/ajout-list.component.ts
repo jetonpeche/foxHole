@@ -65,7 +65,6 @@ export class AjoutListComponent implements OnInit
 
   GenererListeItem(): void
   {    
-
     this.listeItem.length = 0;
 
     this.listeItem = this.listeItemG.filter(item => (item.idType == this.idType && item.idFaction == this.idFaction) || (item.idType == this.idType && item.idFaction == "3"));

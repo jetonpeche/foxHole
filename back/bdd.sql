@@ -24,6 +24,15 @@ create table typeItem
 	primary key (idType)
 );
 
+create table depot
+(
+	idDepot int AUTO_INCREMENT,
+	nomDepot varchar(100),
+	codeDepot int,
+
+	primary key (idDepot)
+);
+
 create table item
 (
 	idItem int AUTO_INCREMENT,

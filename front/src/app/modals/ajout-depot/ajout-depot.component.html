@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>Ajouter depot(s)</h2>
+
+<mat-dialog-content>
+
+  <form #e="ngForm" class="container-fluid">
+
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Nombre depot: </mat-label>
+      <input #nb matInput name="nbDepot" (keyup)="AjouterInput(+nb.value)" type="number" ngModel required>
+    </mat-form-field>
+
+    <div *ngFor="let element of listeInput; let i = index">
+
+      <br>
+      <h2>Depot n° {{ i + 1 }}</h2>
+      <br>
+
+      <!-- nom depot -->
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Nom: </mat-label>
+        <input #nom matInput [name]="element.nameNom" type="text" maxlength="100" ngModel required>
+        <mat-hint align="end">{{ nom.value.length }} / 100</mat-hint>
+      </mat-form-field>
+
+      <!-- ncode depot -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Code: </mat-label>
+        <input matInput [name]="element.nameCode" type="number" ngModel required>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="AjouterDepot(e)" [disabled]="e.invalid">Ajouter depot(s)</button>&nbsp;
+  <button mat-button mat-dialog-close color="warn">Fermer</button>
+</mat-dialog-actions>

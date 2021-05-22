@@ -1,15 +1,4 @@
+#flex{
 
-.sidenav-container {
-  height: 100%;
+  flex: 1 1 auto;
 }
-
-.sidenav {
-  width: 200px;
-  box-shadow: 3px 0 6px rgb(0, 0, 0, 0.24);
-}
-
-  .sidenav .mat-toolbar {
-    background: inherit;
-    background-color: #3F51B5;
-    color: white;
-  }
