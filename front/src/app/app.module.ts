@@ -43,7 +43,8 @@ import { AjoutObjListComponent } from './modals/ajout-obj-list/ajout-obj-list.co
 
 // permet de donner la possibilité de refrech la page en mode prod en ajoutant un # sur URL
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { MassFactoryComponent } from './components/mass-factory/mass-factory.component';
+import { ListeService } from './services/liste.service';
+import { FactionService } from './services/faction.service';
 
 @NgModule({
   declarations: [
@@ -51,8 +52,7 @@ import { MassFactoryComponent } from './components/mass-factory/mass-factory.com
     FactoryComponent,
     AjoutListComponent,
     AjoutObjComponent,
-    AjoutObjListComponent,
-    MassFactoryComponent
+    AjoutObjListComponent
   ],
   imports: [
     BrowserModule,
@@ -90,7 +90,7 @@ import { MassFactoryComponent } from './components/mass-factory/mass-factory.com
   ],
 
   entryComponents: [AjoutListComponent, AjoutObjComponent, AjoutObjListComponent],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, FactoryService, ItemService],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, FactoryService, ItemService, ListeService, FactionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

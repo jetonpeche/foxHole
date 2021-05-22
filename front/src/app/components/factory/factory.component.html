@@ -1,37 +1,49 @@
-<div class="container-fluid">
 
+<div class="titre">
+    <h2>Factory</h2>
+    <br>
+    <button mat-raised-button (click)="PopUpAjoutObj()" color="primary">Ajouter item</button>&nbsp;
+    <button mat-raised-button (click)="PopUpAjoutListe()" color="primary">Créer liste</button>
+    <br><br>
+</div>
+<br>
+<div class="container-fluid">
     <!-- type object -->
     <mat-form-field appearance="outline" class="full-width">
         <mat-label>Nom de la liste</mat-label>
-        <mat-select (selectionChange)="ListerObj($event.value)" #selectListe>
+        <mat-select (selectionChange)="ListerObj($event.value)">
             <mat-option *ngFor="let element of listeListeNom" [value]="element.idListFactory">
                 {{ element.nomListFactory }}
             </mat-option>
         </mat-select>
     </mat-form-field>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">nom</th>
-                <th scope="col">Qte à faire</th>
-                <th scope="col">Qte faite</th>
-                <th scope="col">Valider qte</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let element of listeObj">
-                <th scope="row">{{ element.nomItem }}</th>
-                <td>{{ element.qte }}</td>
-                <td>
-                    <mat-form-field appearance="outline" class="full-width">
-                        <input matInput #inputQteEnleve name="qte" type="number">
-                    </mat-form-field>
-                </td>
-                <td>
-                    <button mat-raised-button (click)="ReduireQte(element.idItem, +inputQteEnleve.value)" color="primary">Valider</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- liste à produire -->
+    <div *ngIf="listeObj.length != 0">
+        <table class="table">
+            <thead style="background-color: white;">
+                <tr>
+                    <th scope="col">nom</th>
+                    <th scope="col">Qte à faire</th>
+                    <th scope="col">Qte faite</th>
+                    <th scope="col">Valider qte</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let element of listeObj; let pair = even" [ngClass]="{ 'blanc': pair, 'gris': !pair }">
+                    <th scope="row">{{ element.nomItem }}</th>
+                    <td>{{ element.qte }}</td>
+                    <td>
+                        <mat-form-field appearance="outline" class="full-width">
+                            <input matInput #inputQteEnleve name="qte" type="number">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <button mat-raised-button (click)="ReduireQte(element.idItem, +inputQteEnleve.value)"
+                            [disabled]="+inputQteEnleve.value == 0" color="primary">Valider</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

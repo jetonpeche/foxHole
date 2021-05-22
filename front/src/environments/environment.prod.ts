@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
 
-  url: ""
+  url: "",
+  msgHttp: "Vous n'êtes plus connecté(e) à internet"
 };

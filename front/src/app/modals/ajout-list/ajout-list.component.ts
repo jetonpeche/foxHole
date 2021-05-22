@@ -28,8 +28,6 @@ export class AjoutListComponent implements OnInit
 
   private listeItemValide: any[] = [];
 
-  private changeType: boolean = false;
-
   private listeItemG: Item[];
 
   constructor(private listeService: ListeService, private toastrServ: ToastrService, private dialogRef: MatDialogRef<AjoutListComponent>) { }

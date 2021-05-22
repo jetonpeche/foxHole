@@ -1,0 +1,32 @@
+table
+{
+    box-shadow: 3px 0 6px rgb(0, 0, 0, 0.24);
+}
+
+.titre
+{
+    text-align: center;
+    background-color: #404040;
+}
+
+.titre h2
+{
+    letter-spacing: 1px;
+    color: whitesmoke;
+    padding-top: 1%;
+}
+
+.blanc
+{
+    background-color: white;
+}
+
+.gris
+{
+    background-color: #F2F2F2;
+}
+
+button
+{
+    letter-spacing: 1px;
+}
