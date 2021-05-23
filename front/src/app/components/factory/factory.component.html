@@ -15,7 +15,7 @@
         <mat-label>Nom de la liste</mat-label>
         <mat-select (selectionChange)="ListerObj($event.value)">
             <mat-option *ngFor="let element of listeListeNom" [value]="element.idListFactory">
-                {{ element.nomListFactory }}
+                {{ element.nomListFactory }} - ({{ element.listeItem.length }})
             </mat-option>
         </mat-select>
     </mat-form-field>
