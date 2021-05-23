@@ -62,4 +62,22 @@ class ListeObj
         $sth = $conn->prepare($sql);
         $sth->execute(array($qte, $idItem, $idListeFactory));
     }
+
+    public function ModifierNomListe($nom, $id)
+    { 
+        $conn = ConnexionBDD::getConnexion();
+
+        $sql = "UPDATE listFactory SET nomListFactory = ? WHERE idListFactory = ?";
+        $sth = $conn->prepare($sql);
+        $sth->execute(array($nom, $id));
+    }
+
+    public function SupprimerItemListe($id)
+    {
+        $conn = ConnexionBDD::getConnexion();
+
+        $sql = "DELETE FROM itemListFactory WHERE idListFactory = ?";
+        $sth = $conn->prepare($sql);
+        $sth->execute(array($id));
+    }
 }

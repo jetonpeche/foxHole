@@ -128,7 +128,21 @@ export class FactoryComponent implements OnInit, AfterViewInit
 
   PopUpAjoutObjListe(): void
   {
-    this.dialog.open(AjoutObjListComponent, { data: { liste: this.listeListeNom, listeObj: this.listeObj }});
+    if(this.idListeChoisis!= null)
+    {
+      let liste = this.listeListeNom.find(liste => liste.idListFactory == this.idListeChoisis);
+      const DIALOG_REF = this.dialog.open(AjoutObjListComponent, { disableClose: true, data: { liste }});
+      DIALOG_REF.afterClosed().subscribe(
+        () =>
+        {
+          this.ListerObj(this.idListeChoisis); 
+        }
+      );
+    }
+    else
+    {
+      this.toastrServ.warning("Aucune liste selectionnée", "Erreur liste");
+    }
   }
 
   private ListerItem(): void

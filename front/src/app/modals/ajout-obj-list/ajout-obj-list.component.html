@@ -1,1 +1,71 @@
-<p>ajout-obj-list works!</p>
+<h2 mat-dialog-title>Modifier liste: {{ data.liste.nomListFactory | titlecase }}</h2>
+
+<mat-dialog-content>
+
+  <form #e="ngForm">
+
+    <!-- nom liste -->
+    <mat-form-field appearance="outline" class="full-width">
+        <input matInput #inputQteEnleve name="nomListe" type="text" maxlength="50" [(ngModel)]="data.liste.nomListFactory" required>
+    </mat-form-field>
+
+    <br>
+
+    <!-- faction -->
+    <mat-radio-group (change)="GenererListeItem()" color="primary" name="idFaction" [(ngModel)]="idFaction">
+        <mat-radio-button *ngFor="let element of listeFaction" [value]="element.idFaction">{{ element.nomFaction }}</mat-radio-button>
+    </mat-radio-group>
+
+    <!-- type object -->
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Type de l'objet</mat-label>
+        <mat-select (selectionChange)="GenererListeItem()" name="idType" [(ngModel)]="idType">
+            <mat-option *ngFor="let element of listeType" [value]="element.idType">{{ element.nomType }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Quantité</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let element of listeItem">
+            <th scope="row">{{ element.nomItem }}</th>
+            <td>
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Quantité: </mat-label>
+                    <input #inputQte matInput type="number" [value]="AfficherQte(element.idItem)">
+                </mat-form-field>
+            </td>
+            <td>
+  
+              <!-- btn ajouter -->
+              <button *ngIf="!EstDansListe(element.idItem)" mat-fab color="primary" (click)="AjouterItem(inputQte.value, element)">
+                <mat-icon>add</mat-icon>
+              </button>
+
+              <!-- btn modifier -->
+              <button *ngIf="EstDansListe(element.idItem)" mat-fab color="primary" (click)="ModifQteItem(+inputQte.value, element.idItem)">
+                <mat-icon>mode_edit</mat-icon>
+              </button>&nbsp;
+  
+              <!-- btn supprimer -->
+              <button *ngIf="EstDansListe(element.idItem)" mat-fab color="warn" (click)="SupprimerItem(element.idItem)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+      </table>
+
+  </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="ModifierListe(e)" [disabled]="e.invalid">modifier liste</button>&nbsp;
+  <button mat-button mat-dialog-close color="warn" (click)="AnnulerModif()">Fermer</button>
+</mat-dialog-actions>

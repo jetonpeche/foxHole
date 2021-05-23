@@ -25,4 +25,9 @@ export class ListeService
   {
     return this.http.post(`${environment.url}/listeObj/reduireQteItem.php`, _info);
   }
+
+  ModifierListe(_info): Observable<any>
+  {
+    return this.http.post(`${environment.url}/listeObj/modifierListe.php`, _info)
+  }
 }
