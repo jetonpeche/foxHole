@@ -61,6 +61,14 @@ class ListeObj
         $sql = "UPDATE itemListFactory SET qte = qte - ? WHERE idItem = ? AND idListFactory = ?";
         $sth = $conn->prepare($sql);
         $sth->execute(array($qte, $idItem, $idListeFactory));
+
+        $sql = "SELECT qte FROM itemListFactory WHERE idItem = ? AND idListFactory = ?";
+        $sth = $conn->prepare($sql);
+        $sth->execute(array($idItem, $idListeFactory));
+        $resultat = $sth->fetchObject();
+
+        if($resultat->qte <= 0)
+            $this->SupprimerItemListe($idItem, $idListeFactory);
     }
 
     public function ModifierNomListe($nom, $id)
@@ -72,12 +80,30 @@ class ListeObj
         $sth->execute(array($nom, $id));
     }
 
-    public function SupprimerItemListe($id)
+    public function SupprimerItemListe($idItem, $idListeFactory)
+    {
+        $conn = ConnexionBDD::getConnexion();
+
+        $sql = "DELETE FROM itemListFactory  WHERE idItem = ? AND idListFactory = ?";
+        $sth = $conn->prepare($sql);
+        $sth->execute(array($idItem, $idListeFactory));
+    }
+
+    public function SupprimerAllItemListe($id)
     {
         $conn = ConnexionBDD::getConnexion();
 
         $sql = "DELETE FROM itemListFactory WHERE idListFactory = ?";
         $sth = $conn->prepare($sql);
         $sth->execute(array($id));
+    }
+
+    public function SupprimerListe($idListe)
+    {
+        $conn = ConnexionBDD::getConnexion();
+
+        $sql = "DELETE FROM listFactory WHERE idListFactory = ?";
+        $sth = $conn->prepare($sql);
+        $sth->execute(array($idListe));
     }
 }

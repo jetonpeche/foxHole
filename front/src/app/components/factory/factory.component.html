@@ -4,7 +4,8 @@
     <br>
     <button mat-raised-button (click)="PopUpAjoutObj()" color="primary">Ajouter item</button>&nbsp;
     <button mat-raised-button (click)="PopUpAjoutListe()" color="primary">Créer liste</button>&nbsp;
-    <button mat-raised-button (click)="PopUpAjoutObjListe()" color="primary">Modifier liste</button>
+    <button mat-raised-button (click)="PopUpAjoutObjListe()" color="primary">Modifier liste</button>&nbsp;
+    <button mat-raised-button (click)="PopUpSupprimerListe()" color="primary">Supprimer liste</button>&nbsp;
     <br><br>
 </div>
 <br>
@@ -29,6 +30,7 @@
                     <th scope="col">Qte à faire</th>
                     <th scope="col">Qte faite</th>
                     <th scope="col">Valider qte</th>
+                    <th scope="col">Supprimer</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,8 +43,16 @@
                         </mat-form-field>
                     </td>
                     <td>
-                        <button mat-raised-button (click)="ReduireQte(element.idItem, +inputQteEnleve.value)"
-                            [disabled]="+inputQteEnleve.value == 0" color="primary">Valider</button>
+                        <button mat-fab (click)="ReduireQte(element.idItem, +inputQteEnleve.value)"
+                            [disabled]="+inputQteEnleve.value == 0" color="primary">
+                            <mat-icon>done</mat-icon>
+                        </button>
+                    </td>
+
+                    <td>
+                        <button mat-fab (click)="SupprimerItemListe(element.idItem, element.nomItem)" color="warn">
+                            <mat-icon>delete</mat-icon>
+                        </button>
                     </td>
                 </tr>
             </tbody>

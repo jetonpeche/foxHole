@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AjoutListComponent } from 'src/app/modals/ajout-list/ajout-list.component';
 import { AjoutObjListComponent } from 'src/app/modals/ajout-obj-list/ajout-obj-list.component';
 import { AjoutObjComponent } from 'src/app/modals/ajout-obj/ajout-obj.component';
+import { SuppListeComponent } from 'src/app/modals/supp-liste/supp-liste.component';
 import { FactionService } from 'src/app/services/faction.service';
 import { ItemService } from 'src/app/services/item.service';
 import { ListeService } from 'src/app/services/liste.service';
@@ -35,6 +36,8 @@ export class FactoryComponent implements OnInit, AfterViewInit
 
   ngOnInit(): void
   {
+    console.log(this.idListeChoisis);
+    
     this.ListerFaction();
     this.ListerItem();
     this.ListerListeObj();
@@ -70,7 +73,7 @@ export class FactoryComponent implements OnInit, AfterViewInit
     const ITEM = this.listeObj.find(item => item.idItem == _idItem);
     const QTE_RESTANTE = ITEM.qte - _qte;
 
-    if(QTE_RESTANTE > 0)
+    if(QTE_RESTANTE >= 0)
     {
       const DATA = { idListItem: this.idListeChoisis, idItem: _idItem, qte: _qte };
 
@@ -86,7 +89,7 @@ export class FactoryComponent implements OnInit, AfterViewInit
           }
           else
           {
-            this.toastrServ.success("La quantité est mise à jour", "MAJ quantité");
+            this.toastrServ.success("La quantité est mise à jour", "MAJ quantité");           
             ITEM.qte = QTE_RESTANTE;
           }
         },
@@ -100,6 +103,41 @@ export class FactoryComponent implements OnInit, AfterViewInit
     {
       this.toastrServ.warning("La quantité ne peut est négative");
     }    
+  }
+
+  SupprimerItemListe(_idItem: string, _nomItem: string): void
+  {
+    if(confirm("Confirmation, suppression de l'item: " + _nomItem))
+    {
+      const DATA = { idItem: _idItem, idListe: this.idListeChoisis };
+
+      this.listeService.SupprimerItemListe(DATA).subscribe(
+        () =>
+        {
+          const INDEX = this.listeObj.findIndex(item => item.idItem == _idItem);
+          this.listeObj.splice(INDEX, 1);
+        }, 
+        () =>
+        {
+          this.toastrServ.error(environment.msgHttp, "erreur réseaux");
+        }
+      );
+    }
+  }
+
+  PopUpSupprimerListe(): void
+  {
+    const DIALOG_REF = this.dialog.open(SuppListeComponent, { disableClose: true, data: { liste: this.listeListeNom }});
+
+    DIALOG_REF.beforeClosed().subscribe(
+      () =>
+      {
+        if(DIALOG_REF.componentInstance.listeSupp == true)
+        { 
+          this.idListeChoisis = null;       
+        }   
+      }
+    );
   }
 
   PopUpAjoutObj(): void
@@ -128,9 +166,10 @@ export class FactoryComponent implements OnInit, AfterViewInit
 
   PopUpAjoutObjListe(): void
   {
-    if(this.idListeChoisis!= null)
+    if(this.idListeChoisis != null)
     {
       let liste = this.listeListeNom.find(liste => liste.idListFactory == this.idListeChoisis);
+
       const DIALOG_REF = this.dialog.open(AjoutObjListComponent, { disableClose: true, data: { liste }});
       DIALOG_REF.afterClosed().subscribe(
         () =>

@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Supprimer liste(s)</h2>
+
+<mat-dialog-content>
+
+    <form #e="ngForm" class="container-fluid">
+        <mat-selection-list name="listeIdListe" ngModel required>
+            <mat-list-option *ngFor="let element of data.liste" [value]="element.idListFactory" color="primary">
+                {{ element.nomListFactory }} - ({{ element.listeItem.length }})
+            </mat-list-option>
+        </mat-selection-list>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" (click)="SupprimerListe(e)" [disabled]="e.invalid">
+        Supprimer liste(s)
+    </button>&nbsp;
+    <button mat-button mat-dialog-close color="warn">Fermer</button>
+</mat-dialog-actions>

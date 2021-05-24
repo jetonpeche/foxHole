@@ -12,7 +12,7 @@
     $diag = new ListeObj();
 
     $diag->ModifierNomListe($nomListe, $idListe);
-    $diag->SupprimerItemListe($idListe);
+    $diag->SupprimerAllItemListe($idListe);
 
     foreach ($liste as $element) 
     {

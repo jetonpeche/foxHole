@@ -28,6 +28,16 @@ export class ListeService
 
   ModifierListe(_info): Observable<any>
   {
-    return this.http.post(`${environment.url}/listeObj/modifierListe.php`, _info)
+    return this.http.post(`${environment.url}/listeObj/modifierListe.php`, _info);
+  }
+
+  SupprimerListe(_info): Observable<any>
+  {
+    return this.http.post(`${environment.url}/listeObj/supprimerListe.php`, _info);
+  }
+
+  SupprimerItemListe(_info): Observable<any>
+  {
+    return this.http.post(`${environment.url}/listeObj/supprimerItemListe.php`, _info);
   }
 }

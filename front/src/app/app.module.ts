@@ -48,6 +48,7 @@ import { FactionService } from './services/faction.service';
 import { DepotComponent } from './components/depot/depot.component';
 import { DepotService } from './services/depot.service';
 import { AjoutDepotComponent } from './modals/ajout-depot/ajout-depot.component';
+import { SuppListeComponent } from './modals/supp-liste/supp-liste.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { AjoutDepotComponent } from './modals/ajout-depot/ajout-depot.component'
     AjoutObjComponent,
     AjoutObjListComponent,
     DepotComponent,
-    AjoutDepotComponent
+    AjoutDepotComponent,
+    SuppListeComponent
   ],
   imports: [
     BrowserModule,
@@ -94,7 +96,7 @@ import { AjoutDepotComponent } from './modals/ajout-depot/ajout-depot.component'
     )
   ],
 
-  entryComponents: [AjoutListComponent, AjoutObjComponent, AjoutObjListComponent, AjoutDepotComponent],
+  entryComponents: [AjoutListComponent, AjoutObjComponent, AjoutObjListComponent, AjoutDepotComponent, SuppListeComponent],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, FactoryService, ItemService, ListeService, FactionService, DepotService],
   bootstrap: [AppComponent]
 })
