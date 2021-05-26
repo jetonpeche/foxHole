@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Item } from '../type/item';
 import { ListeObj } from '../type/listeObj';
 
 @Injectable({
@@ -10,6 +11,11 @@ import { ListeObj } from '../type/listeObj';
 export class ListeService 
 {
   constructor(private http: HttpClient) { }
+
+  GetListeObj(): Item[]
+  {
+    return JSON.parse(sessionStorage.getItem("listeItem"));
+  }
 
   ListerListe(): Observable<ListeObj[]>
   {

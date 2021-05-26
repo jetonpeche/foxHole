@@ -32,3 +32,7 @@ button
 {
     letter-spacing: 1px;
 }
+
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }

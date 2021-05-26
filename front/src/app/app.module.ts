@@ -31,24 +31,30 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 
 // components
 import { FactoryComponent } from './components/factory/factory.component';
+import { DepotComponent } from './components/depot/depot.component';
+import { EventComponent } from './components/event/event.component';
 
 // services
 import { FactoryService } from './services/factory.service';
 import { ItemService } from './services/item.service';
+import { ListeService } from './services/liste.service';
+import { FactionService } from './services/faction.service';
+
+import { DepotService } from './services/depot.service';
+import { EventService } from './services/event.service';
 
 // modals
 import { AjoutListComponent } from './modals/ajout-list/ajout-list.component';
 import { AjoutObjComponent } from './modals/ajout-obj/ajout-obj.component';
 import { AjoutObjListComponent } from './modals/ajout-obj-list/ajout-obj-list.component';
+import { AjoutDepotComponent } from './modals/ajout-depot/ajout-depot.component';
+import { SuppListeComponent } from './modals/supp-liste/supp-liste.component';
+import { AjoutEventComponent } from './modals/ajout-event/ajout-event.component';
 
 // permet de donner la possibilité de refrech la page en mode prod en ajoutant un # sur URL
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { ListeService } from './services/liste.service';
-import { FactionService } from './services/faction.service';
-import { DepotComponent } from './components/depot/depot.component';
-import { DepotService } from './services/depot.service';
-import { AjoutDepotComponent } from './modals/ajout-depot/ajout-depot.component';
-import { SuppListeComponent } from './modals/supp-liste/supp-liste.component';
+import { ListeItemEventComponent } from './modals/liste-item-event/liste-item-event.component';
+
 
 @NgModule({
   declarations: [
@@ -59,7 +65,10 @@ import { SuppListeComponent } from './modals/supp-liste/supp-liste.component';
     AjoutObjListComponent,
     DepotComponent,
     AjoutDepotComponent,
-    SuppListeComponent
+    SuppListeComponent,
+    EventComponent,
+    AjoutEventComponent,
+    ListeItemEventComponent
   ],
   imports: [
     BrowserModule,
@@ -97,7 +106,7 @@ import { SuppListeComponent } from './modals/supp-liste/supp-liste.component';
   ],
 
   entryComponents: [AjoutListComponent, AjoutObjComponent, AjoutObjListComponent, AjoutDepotComponent, SuppListeComponent],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, FactoryService, ItemService, ListeService, FactionService, DepotService],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, FactoryService, ItemService, ListeService, FactionService, DepotService, EventService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

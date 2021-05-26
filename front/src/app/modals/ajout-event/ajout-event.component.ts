@@ -1,0 +1,117 @@
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
+import { EventService } from 'src/app/services/event.service';
+import { ItemService } from 'src/app/services/item.service';
+import { ListeService } from 'src/app/services/liste.service';
+import { Faction } from 'src/app/type/faction';
+import { Item } from 'src/app/type/item';
+import { TypeItem } from 'src/app/type/typeItem';
+import { environment } from 'src/environments/environment';
+
+@Component({
+  selector: 'app-ajout-event',
+  templateUrl: './ajout-event.component.html',
+  styleUrls: ['./ajout-event.component.css']
+})
+export class AjoutEventComponent implements OnInit {
+
+  idFaction: string;
+  idType: string;
+
+  ajout: boolean = false;
+
+  listeItem: Item[] = [];
+  listeType: TypeItem[] = [];
+  listeFaction: Faction[] = [];
+
+  private listeItemValide: any[] = [];
+
+  private listeItemG: Item[];
+
+  constructor(private listeService: ListeService, private toastrServ: ToastrService, private dialogRef: MatDialogRef<AjoutEventComponent>, private eventService: EventService) { }
+
+  ngOnInit(): void 
+  {
+    this.listeType = JSON.parse(sessionStorage.getItem("listeType"));
+    this.listeItemG = JSON.parse(sessionStorage.getItem("listeItem"));
+    
+    this.listeFaction = JSON.parse(sessionStorage.getItem("listeFaction"));
+  }
+
+  AjouterListe(_form: NgForm): void
+  {
+    const DATA = 
+    { 
+      nomListe: _form.value["nomListe"], 
+      qte: _form.value["qte"],
+      listeItem: this.listeItemValide 
+    };
+
+    this.listeService.AjouterLister(DATA).subscribe(
+      () =>
+      {
+        this.ajout = true;
+        this.toastrServ.success("La liste" + DATA.nomListe + "à été ajouté");
+        this.dialogRef.close();
+      },
+      () =>
+      {
+        this.toastrServ.error(environment.msgHttp, "erreur réseaux");
+      }
+    );
+  }
+
+  GenererListeItem(): void
+  {    
+    this.listeItem.length = 0;
+
+    this.listeItem = this.listeItemG.filter(item => (item.idType == this.idType && item.idFaction == this.idFaction) || (item.idType == this.idType && item.idFaction == "3"));
+  }
+
+  EstSelectionner(_id): boolean
+  {
+    const ITEM = this.listeItemValide.find(item => item.idItem == _id);
+
+    return ITEM != null ? true : false;
+  }
+
+  AjouterItem(_qte: string, _idItem: string): void
+  { 
+    if(+_qte > 0 && _qte != "")
+    {
+      this.listeItemValide.push({ idItem: _idItem, qte: _qte });
+    }
+    else
+    {
+      this.toastrServ.warning("La quantité n'est pas bonne", "Quantité incorrect");
+    }
+  }
+
+  AjouterEvenement(_form: NgForm): void
+  {
+    const DATA = { nom: _form.value["nom"], description: _form.value["description"], dateTime: _form.value["dateTime"],  listeItem: this.listeItemValide };
+    
+    this.eventService.AjouterEvent(DATA).subscribe(
+      () =>
+      {
+        this.ajout = true;
+        this.toastrServ.warning("L'event a été ajouté", "Event ajouté");
+
+        this.dialogRef.close();
+      },
+      () =>
+      {
+        this.toastrServ.warning("La quantité n'est pas bonne", "Quantité incorrect");
+      }
+    );
+    
+  }
+
+  SupprimerItem(_idItem: string): void
+  {
+    const INDEX = this.listeItemValide.findIndex(item => item.idItem == _idItem);
+    this.listeItemValide.splice(INDEX, 1);
+  }
+}

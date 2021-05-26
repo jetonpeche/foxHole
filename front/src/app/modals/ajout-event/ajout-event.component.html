@@ -1,0 +1,81 @@
+<h2 mat-dialog-title>Ajouter évènement</h2>
+
+<mat-dialog-content>
+    <form #e="ngForm" class="container-fluid">
+
+        <!-- nom -->
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nom: </mat-label>
+            <input matInput name="nom" ngModel required>
+        </mat-form-field>
+
+        <!-- description -->
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Description: </mat-label>
+            <textarea #description matInput name="description" maxlength="1000" rows="5" ngModel required></textarea>
+            <mat-hint align="end">{{description.value.length}} / 1000</mat-hint>
+        </mat-form-field>
+
+        <!-- date / heure -->
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Heure: </mat-label>
+            <input matInput type="datetime-local" name="dateTime" ngModel required>
+        </mat-form-field>
+        
+        <!-- faction -->
+        <mat-radio-group (change)="GenererListeItem()" color="primary" name="idFaction" [(ngModel)]="idFaction">
+            <mat-radio-button *ngFor="let element of listeFaction" [value]="element.idFaction">{{ element.nomFaction }}</mat-radio-button>
+        </mat-radio-group>
+        <br>
+        
+        <!-- type object -->
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Type de l'objet</mat-label>
+            <mat-select (selectionChange)="GenererListeItem()" name="idType" [(ngModel)]="idType">
+                <mat-option *ngFor="let element of listeType" [value]="element.idType">{{ element.nomType }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        
+        <p>Choisissez les items que vous voulez ajouter</p>
+    
+        <!-- affichage des item de la nation -->
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Quantité</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let element of listeItem">
+                <th scope="row">{{ element.nomItem }}</th>
+                <td>
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Quantité: </mat-label>
+                    <input #inputQte matInput type="number">
+                </mat-form-field>
+                </td>
+                <td>
+    
+                <!-- btn ajouter -->
+                <button *ngIf="!EstSelectionner(element.idItem)" mat-fab color="primary" (click)="AjouterItem(inputQte.value, element.idItem)">
+                    <mat-icon>add</mat-icon>
+                </button>
+    
+                <!-- btn supprimer -->
+                <button *ngIf="EstSelectionner(element.idItem)" mat-fab color="warn" (click)="SupprimerItem(element.idItem)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" (click)="AjouterEvenement(e)" [disabled]="e.invalid">
+        Ajouter évènement
+    </button>&nbsp;
+    <button mat-button mat-dialog-close color="warn">Fermer</button>
+</mat-dialog-actions>

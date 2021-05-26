@@ -1,0 +1,23 @@
+<div class="titre">
+    <h2>Events</h2>
+    <br>
+    <button mat-raised-button (click)="PopUpCreerEvent()" color="primary">Ajouter event</button>
+    <br><br>
+</div>
+<br>
+
+<mat-card *ngFor="let element of listeEvent">
+    <mat-card-header>
+        <mat-card-title>{{ element.nomEvent }}</mat-card-title>
+        <mat-card-subtitle>
+            {{ element.dateHeureEvent | date:'dd/MM/yyyy' }} à {{ element.dateHeureEvent | date:'HH:mm' }} 
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <p>{{ element.descriptionEvent }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button [disabled]="element.listeItem.length == 0" (click)="PopUpListeItemEvent(element.listeItem)" color="primary">Liste de course</button>
+        <button mat-button (click)="SuppEvent(element.idEvent, element.nomEvent)" color="warn">Supprimer event</button>
+    </mat-card-actions>
+</mat-card>

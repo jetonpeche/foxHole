@@ -61,6 +61,28 @@ create table itemListFactory
 	foreign key (idItem) references item (idItem)
 );
 
+create table evenement
+(
+	idEvent int AUTO_INCREMENT,
+	nomEvent varchar(50),
+	descriptionEvent varchar(1000),
+	dateHeureEvent datetime,
+
+	primary key(idEvent)
+);
+
+create table listeItemEvent
+(
+	idEvent int,
+	idItem int,
+	qte int,
+
+	primary key (idEvent, idItem),
+	foreign key (idItem) references item (idItem),
+	foreign key (idEvent) references evenement (idEvent)
+);
+
+
 INSERT INTO faction (idFaction, nomFaction) VALUES (1, "Colonials"), (2, "Wardens"), (3, "les deux");
 INSERT INTO typeItem (idType, nomType) VALUES (1, "Arme"), (2, "Munitions"), (3, "Explosif"), (4, "Supplies"), (5, "Equipement"), (6, "véhicule"), (7, "medic"), (8, "ressource");
 
