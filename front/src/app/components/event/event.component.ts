@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { AjoutEventComponent } from 'src/app/modals/ajout-event/ajout-event.component';
@@ -11,15 +11,20 @@ import { environment } from 'src/environments/environment';
   templateUrl: './event.component.html',
   styleUrls: ['./event.component.css']
 })
-export class EventComponent implements OnInit 
+export class EventComponent implements OnInit, AfterViewInit
 {
   listeEvent: any[] = [];
 
-  constructor(private dialog: MatDialog, private eventService: EventService, private toastrServ: ToastrService) { }
+  constructor(private dialog: MatDialog, private eventService: EventService, private toastrServ: ToastrService, private elementRef: ElementRef) { }
 
   ngOnInit(): void 
   {
     this.ListerEvent();
+  }
+
+  ngAfterViewInit(): void
+  {
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = "#D9D9D9";
   }
 
   SuppEvent(_id: string, _nom: string): void
