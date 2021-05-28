@@ -19,7 +19,7 @@ export class DepotComponent implements OnInit, AfterViewInit
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns: string[] = ['nomDepot', 'codeDepot', 'supp'];
+  displayedColumns: string[] = ['nomDepot', 'codeDepot', 'copie', 'supp'];
 
   listeDepot: MatTableDataSource<Depot>;
 

@@ -28,6 +28,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 // components
 import { FactoryComponent } from './components/factory/factory.component';
@@ -95,6 +97,8 @@ import { ListeItemEventComponent } from './modals/liste-item-event/liste-item-ev
     MatTabsModule,
     MatMenuModule,
     MatPaginatorModule,
+    MatTooltipModule,
+    ClipboardModule,
     ToastrModule.forRoot(
       {
         timeOut: 4000,

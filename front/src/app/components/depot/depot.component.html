@@ -26,6 +26,16 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
             <td mat-cell *matCellDef="let element; let pair = even" [ngClass]="{ 'gris': pair }"> {{ element.codeDepot }} </td>
           </ng-container>
+
+          <!-- copie code Column -->
+          <ng-container matColumnDef="copie">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Copier code </th>
+            <td mat-cell *matCellDef="let element; let pair = even" [ngClass]="{ 'gris': pair }">
+              <button mat-mini-fab color="primary" [cdkCopyToClipboard]="element.codeDepot">
+                <mat-icon>content_copy</mat-icon> 
+              </button>
+            </td>
+          </ng-container>
       
           <!-- Supp Column -->
           <ng-container matColumnDef="supp">

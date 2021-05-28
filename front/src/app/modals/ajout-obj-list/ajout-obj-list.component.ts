@@ -66,7 +66,7 @@ export class AjoutObjListComponent implements OnInit
   ModifQteItem(_qte: number, _idItem: string): void
   {
     const ITEM = this.data.liste.listeItem.find(item => item.idItem == _idItem);
-    ITEM.qte = ITEM.qte + _qte;    
+    ITEM.qte = _qte;    
   }
 
   SupprimerItem(_idItem: string): void

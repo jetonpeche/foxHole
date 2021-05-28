@@ -9,7 +9,7 @@ class Item
     {
         $conn = ConnexionBDD::getConnexion();
 
-        $sql = "SELECT i.*, nomFaction, nomType FROM item i JOIN faction f ON i.idFaction = f.idFaction JOIN typeItem ti ON i.idType = ti.idType";
+        $sql = "SELECT i.*, nomFaction, nomType FROM item i JOIN faction f ON i.idFaction = f.idFaction JOIN typeItem ti ON i.idType = ti.idType ORDER BY i.nomItem";
         $sth = $conn->prepare($sql);
         $sth->execute(array());
         $liste = $sth->fetchAll();

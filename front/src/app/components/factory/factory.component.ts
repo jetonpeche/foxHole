@@ -1,5 +1,8 @@
-import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { AjoutListComponent } from 'src/app/modals/ajout-list/ajout-list.component';
 import { AjoutObjListComponent } from 'src/app/modals/ajout-obj-list/ajout-obj-list.component';
@@ -21,8 +24,14 @@ import { environment } from 'src/environments/environment';
 
 export class FactoryComponent implements OnInit, AfterViewInit
 {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   listeListeNom: any[] = [];
-  listeObj: any[] = [];
+  //listeObj: any[] = [];
+
+  displayedColumns: string[] = ['nomItem', 'qte', 'qteFait'];
+  listeObj: MatTableDataSource<any>;
 
   private idListeChoisis: string;
 
@@ -35,9 +44,9 @@ export class FactoryComponent implements OnInit, AfterViewInit
               private elementRef: ElementRef) { }
 
   ngOnInit(): void
-  {
-    console.log(this.idListeChoisis);
-    
+  { 
+    this.listeObj = new MatTableDataSource();
+
     this.ListerFaction();
     this.ListerItem();
     this.ListerListeObj();
@@ -56,7 +65,21 @@ export class FactoryComponent implements OnInit, AfterViewInit
 
   ngAfterViewInit(): void
   {
+    this.listeObj.paginator = this.paginator;
+    this.listeObj.sort = this.sort;
+
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = "#D9D9D9";
+  }
+
+  applyFilter(event: Event): void 
+  {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.listeObj.filter = filterValue.trim().toLowerCase();
+
+    if (this.listeObj.paginator) 
+    {
+      this.listeObj.paginator.firstPage();
+    }
   }
 
   ListerObj(_id: string): void
@@ -64,13 +87,13 @@ export class FactoryComponent implements OnInit, AfterViewInit
     this.idListeChoisis = _id;
 
     const INDEX = this.listeListeNom.findIndex(liste => liste.idListFactory == _id);
-    this.listeObj = this.listeListeNom[INDEX].listeItem;    
+    this.listeObj.data = this.listeListeNom[INDEX].listeItem;    
   }
 
-  ReduireQte(_idItem: string, _qte: number): void
+  ReduireQte(_idItem: string, _qte: number, _inputQte): void
   {
     // MAJ qte restante
-    const ITEM = this.listeObj.find(item => item.idItem == _idItem);
+    const ITEM = this.listeObj.data.find(item => item.idItem == _idItem);
     const QTE_RESTANTE = ITEM.qte - _qte;
 
     if(QTE_RESTANTE >= 0)
@@ -82,8 +105,8 @@ export class FactoryComponent implements OnInit, AfterViewInit
         {
           if(QTE_RESTANTE == 0)
           {
-            const INDEX = this.listeObj.findIndex(item => item.idItem == _idItem);
-            this.listeObj.splice(INDEX, 1);
+            const INDEX = this.listeObj.data.findIndex(item => item.idItem == _idItem);
+            this.listeObj.data.splice(INDEX, 1);
 
             this.toastrServ.success("L'item est supprimé de la liste", "MAJ liste");
           }
@@ -92,6 +115,9 @@ export class FactoryComponent implements OnInit, AfterViewInit
             this.toastrServ.success("La quantité est mise à jour", "MAJ quantité");           
             ITEM.qte = QTE_RESTANTE;
           }
+
+          // reset input
+          _inputQte.value = "";
         },
         () =>
         {
@@ -114,8 +140,8 @@ export class FactoryComponent implements OnInit, AfterViewInit
       this.listeService.SupprimerItemListe(DATA).subscribe(
         () =>
         {
-          const INDEX = this.listeObj.findIndex(item => item.idItem == _idItem);
-          this.listeObj.splice(INDEX, 1);
+          const INDEX = this.listeObj.data.findIndex(item => item.idItem == _idItem);
+          this.listeObj.data.splice(INDEX, 1);
         }, 
         () =>
         {
@@ -182,6 +208,11 @@ export class FactoryComponent implements OnInit, AfterViewInit
     {
       this.toastrServ.warning("Aucune liste selectionnée", "Erreur liste");
     }
+  }
+
+  GetIdListeChoisie(): string
+  {
+    return this.idListeChoisis;
   }
 
   private ListerItem(): void

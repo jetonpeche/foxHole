@@ -44,17 +44,17 @@
             <td>
   
               <!-- btn ajouter -->
-              <button *ngIf="!EstDansListe(element.idItem)" mat-fab color="primary" (click)="AjouterItem(inputQte.value, element)">
+              <button *ngIf="!EstDansListe(element.idItem)" matTooltip="Ajouter à la liste" mat-fab color="primary" (click)="AjouterItem(inputQte.value, element)">
                 <mat-icon>add</mat-icon>
               </button>
 
               <!-- btn modifier -->
-              <button *ngIf="EstDansListe(element.idItem)" mat-fab color="primary" (click)="ModifQteItem(+inputQte.value, element.idItem)">
+              <button *ngIf="EstDansListe(element.idItem)" matTooltip="Modifier la quantité" mat-fab color="primary" (click)="ModifQteItem(+inputQte.value, element.idItem)">
                 <mat-icon>mode_edit</mat-icon>
               </button>&nbsp;
   
               <!-- btn supprimer -->
-              <button *ngIf="EstDansListe(element.idItem)" mat-fab color="warn" (click)="SupprimerItem(element.idItem)">
+              <button *ngIf="EstDansListe(element.idItem)" matTooltip="Supprimer de la liste" mat-fab color="warn" (click)="SupprimerItem(element.idItem)">
                 <mat-icon>delete</mat-icon>
               </button>
             </td>

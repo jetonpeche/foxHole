@@ -9,7 +9,7 @@ class ListeObj
     {
         $conn = ConnexionBDD::getConnexion();
 
-        $sql = "SELECT * FROM listFactory";
+        $sql = "SELECT * FROM listFactory ORDER BY nomListFactory";
         $sth = $conn->prepare($sql);
         $sth->execute(array());
         $liste = $sth->fetchAll();
@@ -21,7 +21,7 @@ class ListeObj
     {
         $conn = ConnexionBDD::getConnexion();
 
-        $sql = "SELECT i.nomItem, i.idItem, qte FROM itemListFactory il JOIN item i ON il.idItem = i.idItem WHERE idListFactory = ?";
+        $sql = "SELECT i.nomItem, i.idItem, qte FROM itemListFactory il JOIN item i ON il.idItem = i.idItem WHERE idListFactory = ? ORDER BY i.nomItem";
         $sth = $conn->prepare($sql);
         $sth->execute(array($idListe));
         $liste = $sth->fetchAll();

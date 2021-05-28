@@ -9,7 +9,7 @@ class Depot
     {
         $conn = ConnexionBDD::getConnexion();
 
-        $sql = "SELECT * FROM depot";
+        $sql = "SELECT * FROM depot ORDER BY nomDepot";
         $sth = $conn->prepare($sql);
         $sth->execute(array());
         $liste = $sth->fetchAll();

@@ -1,4 +1,3 @@
-
 <div class="titre">
     <h2>Factory</h2>
     <br>
@@ -10,7 +9,7 @@
 </div>
 <br>
 <div class="container-fluid">
-    
+
     <!-- nom liste -->
     <mat-form-field appearance="outline" class="full-width">
         <mat-label>Nom de la liste</mat-label>
@@ -21,41 +20,66 @@
         </mat-select>
     </mat-form-field>
 
-    <!-- liste des items de la liste -->
-    <div *ngIf="listeObj.length != 0">
-        <table class="table">
-            <thead style="background-color: white;">
-                <tr>
-                    <th scope="col">nom</th>
-                    <th scope="col">Qte à faire</th>
-                    <th scope="col">Qte faite</th>
-                    <th scope="col">Valider qte</th>
-                    <th scope="col">Supprimer</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let element of listeObj; let pair = even" [ngClass]="{ 'blanc': pair, 'gris': !pair }">
-                    <th scope="row">{{ element.nomItem }}</th>
-                    <td>{{ element.qte }}</td>
-                    <td>
-                        <mat-form-field appearance="outline" class="full-width">
-                            <input matInput #inputQteEnleve name="qte" type="number">
-                        </mat-form-field>
-                    </td>
-                    <td>
-                        <button mat-fab (click)="ReduireQte(element.idItem, +inputQteEnleve.value)"
-                            [disabled]="+inputQteEnleve.value == 0" color="primary">
-                            <mat-icon>done</mat-icon>
-                        </button>
-                    </td>
+    <!-- liste des items de la liste choisie -->
+    <div [ngStyle]="{ 'display': GetIdListeChoisie() == null ? 'none' : 'block' }">
 
-                    <td>
-                        <button mat-fab (click)="SupprimerItemListe(element.idItem, element.nomItem)" color="warn">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="filtre container">
+            <mat-form-field class="full-width">
+                <mat-label>Filtre</mat-label>
+                <input matInput (keyup)="applyFilter($event)" #input>
+            </mat-form-field>
+        </div>
+
+        <div class="table container">
+            <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="listeObj" matSort>
+
+                    <!-- nom Column -->
+                    <ng-container matColumnDef="nomItem">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.nomItem }} </td>
+                    </ng-container>
+
+                    <!-- qte a faire Column -->
+                    <ng-container matColumnDef="qte">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantité à faire </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.qte }} </td>
+                    </ng-container>
+
+                    <!-- qte faite Column -->
+                    <ng-container matColumnDef="qteFait">
+                        <th mat-header-cell *matHeaderCellDef> Qte faite </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="row">
+                                <div class="col">
+                                    <mat-form-field appearance="outline">
+                                        <input matInput #inputQteEnleve name="qte" type="number">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col">
+                                    <button mat-fab
+                                        (click)="ReduireQte(element.idItem, +inputQteEnleve.value, inputQteEnleve)"
+                                        [disabled]="+inputQteEnleve.value == 0" matTooltip="Supprimer de la liste"
+                                        color="primary">
+                                        <mat-icon>done</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                    </tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+            </div>
+        </div>
+
     </div>
 </div>
