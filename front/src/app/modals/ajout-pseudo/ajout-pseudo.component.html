@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Ajouter pseudo</h2>
+
+<mat-dialog-content>
+
+    <form #e="ngForm" class="container-fluid">
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Pseudo: </mat-label>
+            <input matInput name="pseudo" type="text" ngModel required>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" (click)="AjouterPseudo(e)" [disabled]="e.invalid">
+        Ajouter pseudo
+    </button>&nbsp;
+    <button mat-button mat-dialog-close color="warn">Fermer</button>
+</mat-dialog-actions>

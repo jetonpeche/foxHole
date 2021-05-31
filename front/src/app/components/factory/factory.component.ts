@@ -7,14 +7,21 @@ import { ToastrService } from 'ngx-toastr';
 import { AjoutListComponent } from 'src/app/modals/ajout-list/ajout-list.component';
 import { AjoutObjListComponent } from 'src/app/modals/ajout-obj-list/ajout-obj-list.component';
 import { AjoutObjComponent } from 'src/app/modals/ajout-obj/ajout-obj.component';
+import { AjoutPseudoComponent } from 'src/app/modals/ajout-pseudo/ajout-pseudo.component';
 import { SuppListeComponent } from 'src/app/modals/supp-liste/supp-liste.component';
 import { FactionService } from 'src/app/services/faction.service';
 import { ItemService } from 'src/app/services/item.service';
 import { ListeService } from 'src/app/services/liste.service';
+import { PseudoService } from 'src/app/services/pseudo.service';
 import { Faction } from 'src/app/type/faction';
 import { Item } from 'src/app/type/item';
+import { Pseudo } from 'src/app/type/pseudo';
 import { TypeItem } from 'src/app/type/typeItem';
 import { environment } from 'src/environments/environment';
+
+import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-factory',
@@ -27,12 +34,15 @@ export class FactoryComponent implements OnInit, AfterViewInit
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  myControl: FormControl;
+  listePseudoFiltre: Observable<Pseudo[]>;
+
   listeListeNom: any[] = [];
-  //listeObj: any[] = [];
 
   displayedColumns: string[] = ['nomItem', 'qte', 'qteFait'];
   listeObj: MatTableDataSource<any>;
 
+  private listePseudo: Pseudo[] = [];
   private idListeChoisis: string;
 
   constructor(private toastrServ: ToastrService,
@@ -40,13 +50,18 @@ export class FactoryComponent implements OnInit, AfterViewInit
               private listeObjService: ListeService, 
               private itemService: ItemService, 
               private listeService: ListeService, 
+              private pseudoService: PseudoService,
               private dialog: MatDialog,
               private elementRef: ElementRef) { }
 
   ngOnInit(): void
-  { 
-    this.listeObj = new MatTableDataSource();
+  {
+    sessionStorage.removeItem("idPseudo");
 
+    this.listeObj = new MatTableDataSource();
+    this.myControl = new FormControl();
+
+    this.ListerPseudo();
     this.ListerFaction();
     this.ListerItem();
     this.ListerListeObj();
@@ -82,6 +97,20 @@ export class FactoryComponent implements OnInit, AfterViewInit
     }
   }
 
+  PseudoChoisi(_pseudo: Pseudo): string
+  {
+    if(_pseudo && _pseudo.nomPseudo)
+    {
+      sessionStorage.setItem("idPseudo", _pseudo.idPseudo);
+
+      return _pseudo.nomPseudo;
+    }
+    else
+    {
+      return undefined;
+    }
+  }
+
   ListerObj(_id: string): void
   {
     this.idListeChoisis = _id;
@@ -98,32 +127,42 @@ export class FactoryComponent implements OnInit, AfterViewInit
 
     if(QTE_RESTANTE >= 0)
     {
-      const DATA = { idListItem: this.idListeChoisis, idItem: _idItem, qte: _qte };
+      // pseudo choisi ?
+      if (sessionStorage.getItem("idPseudo") != null) 
+      {
+        const DATA = { idListItem: this.idListeChoisis, idPseudo: sessionStorage.getItem("idPseudo"), idItem: _idItem, qte: _qte };
 
-      this.listeService.ReduireQteItem(DATA).subscribe(
-        () =>
-        {
-          if(QTE_RESTANTE == 0)
+        this.listeService.ReduireQteItem(DATA).subscribe(
+          () =>
           {
-            const INDEX = this.listeObj.data.findIndex(item => item.idItem == _idItem);
-            this.listeObj.data.splice(INDEX, 1);
+            if(QTE_RESTANTE == 0)
+            {
+              const INDEX = this.listeObj.data.findIndex(item => item.idItem == _idItem);
+              this.listeObj.data.splice(INDEX, 1);
 
-            this.toastrServ.success("L'item est supprimé de la liste", "MAJ liste");
-          }
-          else
+              this.listeObj.data = this.listeObj.data;
+
+              this.toastrServ.success("L'item est supprimé de la liste", "MAJ liste");
+            }
+            else
+            {
+              this.toastrServ.success("La quantité est mise à jour", "MAJ quantité");           
+              ITEM.qte = QTE_RESTANTE;
+            }
+
+            // reset input
+            _inputQte.value = "";
+          },
+          () =>
           {
-            this.toastrServ.success("La quantité est mise à jour", "MAJ quantité");           
-            ITEM.qte = QTE_RESTANTE;
+            this.toastrServ.error(environment.msgHttp, "erreur réseaux");
           }
-
-          // reset input
-          _inputQte.value = "";
-        },
-        () =>
-        {
-          this.toastrServ.error(environment.msgHttp, "erreur réseaux");
-        }
-      );
+        );
+      }
+      else
+      {
+        this.toastrServ.info("Selectionne ton pseudo", "Aucun pseudo");
+      }
     }
     else
     {
@@ -210,6 +249,18 @@ export class FactoryComponent implements OnInit, AfterViewInit
     }
   }
 
+  PopUpAjoutPseudo(): void
+  {
+    const DIALOG_REF = this.dialog.open(AjoutPseudoComponent, { data: { listePseudo: this.listePseudo }});
+    DIALOG_REF.beforeClosed().subscribe(
+      () =>
+      {
+        if(DIALOG_REF.componentInstance.ajout == true)
+          this.ListerPseudo();
+      }
+    );
+  }
+
   GetIdListeChoisie(): string
   {
     return this.idListeChoisis;
@@ -255,5 +306,36 @@ export class FactoryComponent implements OnInit, AfterViewInit
         this.toastrServ.error(environment.msgHttp, "Erreur réseau");
       }
     );
+  }
+
+  private ListerPseudo(): void
+  {
+    this.pseudoService.ListerPseudo().subscribe(
+      (_liste) =>
+      {
+        this.listePseudo = _liste;
+        this.OnInit();
+      },
+      () =>
+      {
+        this.toastrServ.error(environment.msgHttp, "Erreur réseau");
+      }
+    );
+  }
+
+  private OnInit(): void
+  {
+    this.listePseudoFiltre = this.myControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this.Filtre(value))
+      );
+  }
+
+  private Filtre(name: string): Pseudo[]
+  {
+    const filterValue = name.toLowerCase();
+
+    return this.listePseudo.filter(option => option.nomPseudo.toLowerCase().indexOf(filterValue) === 0);
   }
 }

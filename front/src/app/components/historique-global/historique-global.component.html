@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <br>
+  <div class="row">
+    <div *ngFor="let element of listeHistoriqueGlobal" class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+      <mat-card>
+        <mat-card-header>
+          <div class="row">
+            <div class="col">
+              <mat-card-title>{{ element.nomPseudo }} </mat-card-title>
+            </div>
+          </div>
+        </mat-card-header>
+
+        <mat-card-content>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Quantité produit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let element1 of element.historique">
+                <th scope="row">{{ element1.nomItem | titlecase }}</th>
+                <td>{{ element1.qte }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

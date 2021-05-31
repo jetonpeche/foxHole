@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -30,20 +30,22 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 // components
 import { FactoryComponent } from './components/factory/factory.component';
 import { DepotComponent } from './components/depot/depot.component';
 import { EventComponent } from './components/event/event.component';
+import { HistoriqueComponent } from './components/historique/historique.component';
 
 // services
 import { FactoryService } from './services/factory.service';
 import { ItemService } from './services/item.service';
 import { ListeService } from './services/liste.service';
 import { FactionService } from './services/faction.service';
-
 import { DepotService } from './services/depot.service';
 import { EventService } from './services/event.service';
+import { HistoriqueService } from './services/historique.service';
 
 // modals
 import { AjoutListComponent } from './modals/ajout-list/ajout-list.component';
@@ -52,11 +54,13 @@ import { AjoutObjListComponent } from './modals/ajout-obj-list/ajout-obj-list.co
 import { AjoutDepotComponent } from './modals/ajout-depot/ajout-depot.component';
 import { SuppListeComponent } from './modals/supp-liste/supp-liste.component';
 import { AjoutEventComponent } from './modals/ajout-event/ajout-event.component';
+import { ListeItemEventComponent } from './modals/liste-item-event/liste-item-event.component';
+import { AjoutPseudoComponent } from './modals/ajout-pseudo/ajout-pseudo.component';
 
 // permet de donner la possibilité de refrech la page en mode prod en ajoutant un # sur URL
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { ListeItemEventComponent } from './modals/liste-item-event/liste-item-event.component';
-
+import { HistoriqueJournalierComponent } from './components/historique-journalier/historique-journalier.component';
+import { HistoriqueGlobalComponent } from './components/historique-global/historique-global.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +74,11 @@ import { ListeItemEventComponent } from './modals/liste-item-event/liste-item-ev
     SuppListeComponent,
     EventComponent,
     AjoutEventComponent,
-    ListeItemEventComponent
+    ListeItemEventComponent,
+    AjoutPseudoComponent,
+    HistoriqueComponent,
+    HistoriqueJournalierComponent,
+    HistoriqueGlobalComponent
   ],
   imports: [
     BrowserModule,
@@ -99,6 +107,8 @@ import { ListeItemEventComponent } from './modals/liste-item-event/liste-item-ev
     MatPaginatorModule,
     MatTooltipModule,
     ClipboardModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
     ToastrModule.forRoot(
       {
         timeOut: 4000,
@@ -109,8 +119,17 @@ import { ListeItemEventComponent } from './modals/liste-item-event/liste-item-ev
     )
   ],
 
-  entryComponents: [AjoutListComponent, AjoutObjComponent, AjoutObjListComponent, AjoutDepotComponent, SuppListeComponent],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }, FactoryService, ItemService, ListeService, FactionService, DepotService, EventService],
+  entryComponents: [AjoutListComponent, AjoutObjComponent, AjoutObjListComponent, AjoutDepotComponent, SuppListeComponent, AjoutPseudoComponent],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    FactoryService,
+    ItemService,
+    ListeService,
+    FactionService,
+    DepotService,
+    EventService,
+    HistoriqueService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

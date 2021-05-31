@@ -33,6 +33,14 @@ create table depot
 	primary key (idDepot)
 );
 
+create table pseudo
+(
+	idPseudo int AUTO_INCREMENT,
+	nomPseudo varchar(70),
+
+	primary key(idPseudo)
+);
+
 create table item
 (
 	idItem int AUTO_INCREMENT,
@@ -47,13 +55,39 @@ create table item
 	foreign key (idFaction) references faction (idFaction)
 );
 
+create table pseudoItemFabriquer
+(
+	idPseudo int,
+	idItem int,
+
+	qte int,
+	dateFabrique date,
+
+	primary key (idPseudo, idItem),
+
+	foreign key (idPseudo) references pseudo (idPseudo),
+	foreign key (idItem) references item (idItem)
+);
+
+create table historiqueFabrique
+(
+	idPseudo int,
+	idItem int,
+
+	qte int,
+
+	primary key (idPseudo, idItem),
+
+	foreign key (idPseudo) references pseudo (idPseudo),
+	foreign key (idItem) references item (idItem)
+);
+
 create table itemListFactory
 (
 	idListFactory int,
 	idItem int,
 
 	qte int,
-	pseudo varchar(100) DEFAULT "",
 
 	primary key (idListFactory, idItem),
 

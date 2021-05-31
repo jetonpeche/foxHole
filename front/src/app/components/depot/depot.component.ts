@@ -95,6 +95,11 @@ export class DepotComponent implements OnInit, AfterViewInit
     }
   }
 
+  ConfirmCopierCode():void
+  {
+    this.toastrServ.success("Le code est copié", "Code copié");
+  }
+
   applyFilter(event: Event): void
   {
     const filterValue = (event.target as HTMLInputElement).value;

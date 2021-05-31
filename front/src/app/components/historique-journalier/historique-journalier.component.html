@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <div class="row">
+        <div *ngFor="let element of listeHistoriqueJournalier" class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>{{ element.nomPseudo }}</mat-card-title>
+                </mat-card-header>
+            
+                <mat-card-content>
+                    <div class="row">
+                        <div *ngFor="let element1 of element.historique" class="col-6">
+                            {{ element1.nomItem | titlecase }}: {{ element1.qte }}
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>
