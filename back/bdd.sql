@@ -55,6 +55,18 @@ create table item
 	foreign key (idFaction) references faction (idFaction)
 );
 
+create table recette
+(
+	idItem int,
+	idItemRessource int,
+	qteItem int,
+
+	primary key (idItem, idItemRessource),
+
+	foreign key (idItem) references item (idItem),
+	foreign key (idItemRessource) references item (idItem)
+);
+
 create table pseudoItemFabriquer
 (
 	idPseudo int,
@@ -133,7 +145,7 @@ INSERT INTO item (idItem, nomItem, idFaction, idType) VALUES
 (17, "fusil anti-char", 2, 1), 
 (18, "Malone", 2, 1), (19, "KRN886-127 Gast", 1, 1),
 (20, "Revolver", 3, 1),
-(21, "Bae 45", 1, 1), (22, "Venom", 1, 1), (23, "Ignifist 30", 1, 1), (24, "Mounted Bonesaw", 2, 1), (25, "Bonesaw", 2, 1), (26, "Cremari Mortar", 3, 1), (27, "Cutler", 2, 1);
+(21, "Bane 45", 1, 1), (22, "Venom", 1, 1), (23, "Ignifist 30", 1, 1), (24, "Mounted Bonesaw", 2, 1), (25, "Bonesaw", 2, 1), (26, "Cremari Mortar", 3, 1), (27, "Cutler", 2, 1);
 
 -- item type munition
 INSERT INTO item (idItem, nomItem, idType) VALUES 
@@ -157,7 +169,49 @@ INSERT INTO item (idItem, nomItem, idFaction, idType) VALUES
 (83, "Battering Ram", 1, 6), (84, "Collins Cannon", 2, 6);
 
 -- item type medic
-INSERT INTO item (idItem, nomItem, idType) VALUES (87, "Bandages", 7), (88, "Blood Plasma", 7), (89, "First Aid Kit", 7), (90, "Trauma Kit", 7);
+INSERT INTO item (idItem, nomItem, idType) VALUES (85, "Bandages", 7), (86, "Blood Plasma", 7), (87, "First Aid Kit", 7), (88, "Trauma Kit", 7);
 
 -- item type ressource
-INSERT INTO item (idItem, nomItem, idType) VALUES (91, "bMat", 8), (92, "Diesel", 8), (93, "Petrol", 8), (94, "rMat", 8), (95, "explosif", 8), (96, "heavy explosif", 8), (97, "concrete", 8), (98, "Aluminium", 8), (99, "Iron", 8); 
+INSERT INTO item (idItem, nomItem, idType) VALUES (89, "bMat", 8), (90, "Diesel", 8), (91, "Petrol", 8), (92, "rMat", 8), (93, "poudre explosive", 8), (94, "heavy explosif", 8), (95, "concrete", 8), (96, "Aluminium", 8), (97, "Iron", 8); 
+
+-- recette armes
+INSERT INTO recette (idItem, idItemRessource, qteItem) VALUES 
+(1, 89, 120), 
+(2, 89, 80), (3, 89, 120), (4, 89, 120), (5, 89, 120), 
+(6, 89, 60), 
+(7, 89, 200), (7, 92, 15),
+(8, 89, 165), (9, 89, 165), (10, 89, 165),
+(11, 89, 165),
+(12, 89, 100), (13, 89, 100), (14, 89, 140), (15, 89, 140),
+(16, 89, 150),
+(17, 89, 150),
+(18, 92, 30), (19, 92, 30),
+(20, 92, 60),
+(21, 89, 150), (21, 92, 45), (22, 89, 100), (22, 92, 25), (23, 89, 60), (23, 93, 50), (24, 89, 200), (25, 89, 100), (25, 92, 25), (26, 89, 100), (26, 92, 25), (27, 89, 100), (27, 92, 25);
+
+-- recette munition
+INSERT INTO recette (idItem, idItemRessource, qteItem) VALUES 
+(28, 89, 80), (29, 89, 80), (30, 89, 40), (31, 89, 150), (32, 89, 80), (33, 89, 120), (34, 89, 80), (34, 92, 20), (35, 89, 100), (36, 89, 100), (37, 89, 40), (38, 89, 100),
+(39, 89, 60), (39, 93, 75), (40, 89, 60), (40, 93, 75), (41, 89, 60), (41, 93, 35), (42, 89, 60), (42, 93, 15), (43, 89, 60), (43, 93, 10), (44, 89, 60), (44, 93, 15),
+(45, 89, 120), (45, 94, 10), (46, 89, 120), (46, 94, 25), (47, 89, 135), (47, 94, 30), (48, 89, 160), (48, 93, 120), (49, 89, 120), (49, 93, 120), (50, 89, 60), (50, 93, 75);
+
+-- reccette explosif
+INSERT INTO recette (idItem, idItemRessource, qteItem) VALUES 
+(51, 89, 100), (51, 93, 50), (52, 89, 50), (52, 93, 50), (53, 89, 100), (53, 93, 10), (54, 89, 100), (54, 93, 40), (55, 89, 100), (55, 94, 15), (56, 89, 140),
+(57, 89, 100), (57, 93, 20), (58, 89, 100), (58, 93, 20), (59, 89, 100), (59, 93, 10), (60, 89, 120), (61, 92, 200), (61, 94, 1000);
+
+-- recette supplies
+INSERT INTO recette (idItem, idItemRessource, qteItem) VALUES 
+(62, 89, 75), (63, 89, 75), (64, 89, 80);
+
+-- recette equipement
+INSERT INTO recette (idItem, idItemRessource, qteItem) VALUES 
+(65, 89, 160), (66, 89, 100), (67, 89, 160), (68, 89, 150), (69, 89, 100), (70, 89, 200), (71, 89, 200), (72, 89, 100), (73, 89, 75);
+
+-- recette vehicule
+INSERT INTO recette (idItem, idItemRessource, qteItem) VALUES 
+(74, 92, 140), (75, 92, 135), (76, 92, 145), (77, 92, 145), (78, 92, 160), (79, 92, 150), (80, 92, 170), (81, 92, 165), (82, 92, 165), (83, 92, 30), (84, 92, 30);
+
+-- recette medic
+INSERT INTO recette (idItem, idItemRessource, qteItem) VALUES 
+(85, 89, 160), (86, 89, 80), (87, 89, 60), (88, 89, 80);

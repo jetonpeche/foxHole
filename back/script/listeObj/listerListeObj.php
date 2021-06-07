@@ -18,7 +18,8 @@
             array_push($listeItem, array(
                 "idItem" => $element1["idItem"],
                 "nomItem" => $element1["nomItem"],
-                "qte" => $element1["qte"]
+                "qte" => $element1["qte"],
+                "recetteUnite" => $diag->ListerRecetteItem($element1["idItem"])
             ));
         }
 

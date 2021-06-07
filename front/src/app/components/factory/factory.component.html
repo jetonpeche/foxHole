@@ -1,7 +1,6 @@
 <div class="titre">
     <h2>Factory</h2>
     <br>
-    <button mat-raised-button (click)="PopUpAjoutObj()" color="primary">Ajouter item</button>&nbsp;
     <button mat-raised-button (click)="PopUpAjoutPseudo()" color="primary">Ajouter pseudo</button>&nbsp;
     <button mat-raised-button (click)="PopUpAjoutListe()" color="primary">Créer liste</button>&nbsp;
     <button mat-raised-button (click)="PopUpAjoutObjListe()" color="primary">Modifier liste</button>&nbsp;
@@ -36,14 +35,14 @@
     <!-- liste des items de la liste choisie -->
     <div [ngStyle]="{ 'display': GetIdListeChoisie() == null ? 'none' : 'block' }">
 
-        <div class="filtre container">
+        <div class="filtre container-fluid">
             <mat-form-field class="full-width">
                 <mat-label>Filtre</mat-label>
                 <input matInput (keyup)="applyFilter($event)" #input>
             </mat-form-field>
         </div>
 
-        <div class="table container">
+        <div class="table container-fluid">
             <div class="mat-elevation-z8">
                 <table mat-table [dataSource]="listeObj" matSort>
 
@@ -52,6 +51,14 @@
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
                         <td mat-cell *matCellDef="let element; let pair = even" [ngClass]="{ 'gris': pair }"> {{
                             element.nomItem }} </td>
+                    </ng-container>
+
+                    <!-- recette Column -->
+                    <ng-container matColumnDef="recette">
+                        <th mat-header-cell *matHeaderCellDef> Recette </th>
+                        <td mat-cell *matCellDef="let element; let pair = even; let i = index" [ngClass]="{ 'gris': pair }">
+                            {{ AfficherQteRecette(i, +element.qte) }}
+                        </td>
                     </ng-container>
 
                     <!-- qte a faire Column -->

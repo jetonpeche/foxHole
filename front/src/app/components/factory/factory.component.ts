@@ -39,7 +39,7 @@ export class FactoryComponent implements OnInit, AfterViewInit
 
   listeListeNom: any[] = [];
 
-  displayedColumns: string[] = ['nomItem', 'qte', 'qteFait'];
+  displayedColumns: string[] = ['nomItem', 'recette', 'qte', 'qteFait'];
   listeObj: MatTableDataSource<any>;
 
   private listePseudo: Pseudo[] = [];
@@ -95,6 +95,20 @@ export class FactoryComponent implements OnInit, AfterViewInit
     {
       this.listeObj.paginator.firstPage();
     }
+  }
+
+  AfficherQteRecette(_index: number , _qte: number): string
+  {
+    let recette: string = "";
+
+    const LISTE: any[] = this.listeObj.data[_index].recetteUnite;
+
+    for (const ELEMENT of LISTE) 
+    {
+      recette += +ELEMENT.qteItem * _qte + " " + ELEMENT.nomItem + " ";
+    } 
+
+    return recette;
   }
 
   PseudoChoisi(_pseudo: Pseudo): string
@@ -205,6 +219,7 @@ export class FactoryComponent implements OnInit, AfterViewInit
     );
   }
 
+  // btn enlevé
   PopUpAjoutObj(): void
   {
     const DIALOG_REF = this.dialog.open(AjoutObjComponent);

@@ -29,6 +29,18 @@ class ListeObj
         return $liste;
     }
 
+    public function ListerRecetteItem($idItem)
+    {
+        $conn = ConnexionBDD::getConnexion();
+
+        $sql = "SELECT r.qteItem, r.idItemRessource, nomItem FROM recette r JOIN item i ON r.idItemRessource = i.idItem WHERE r.idItem = ?";
+        $sth = $conn->prepare($sql);
+        $sth->execute(array($idItem));
+        $liste = $sth->fetchAll();
+
+        return $liste;
+    }
+
     public function AjouterListe($nomItem)
     {
         $conn = ConnexionBDD::getConnexion();
