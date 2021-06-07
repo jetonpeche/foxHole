@@ -30,7 +30,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 // components
 import { FactoryComponent } from './components/factory/factory.component';
@@ -109,6 +110,7 @@ import { HistoriqueGlobalComponent } from './components/historique-global/histor
     ClipboardModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
+    MatExpansionModule,
     ToastrModule.forRoot(
       {
         timeOut: 4000,

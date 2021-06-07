@@ -9,7 +9,7 @@
 
     foreach ($json as $elment) 
     {
-        $diag->AjouterItem(strip_tags($elment["type"]), strip_tags($elment["nom"]), strip_tags($elment["idFaction"]));
+        $diag->AjouterItem(strip_tags($elment["idTypeItem"]), strip_tags($elment["nomItem"]), strip_tags($elment["idFaction"]), $elment["recette"]);
     }
 
 ?>

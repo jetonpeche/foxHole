@@ -29,13 +29,39 @@ class Item
         return $liste;
     }
 
-    public function AjouterItem($type, $nom, $faction)
+    public function ListerRessource()
+    {
+        $idtype = 8;
+
+        $conn = ConnexionBDD::getConnexion();
+
+        $sql = "SELECT idItem, nomItem FROM item WHERE idType = ? ORDER BY nomItem";
+        $sth = $conn->prepare($sql);
+        $sth->execute(array($idtype));
+        $liste = $sth->fetchAll();
+            
+        return $liste;
+    }
+
+    public function AjouterItem($type, $nom, $faction, $recette)
     {
         $conn = ConnexionBDD::getConnexion();
 
         $sql = "INSERT INTO item (idType, nomItem, idFaction) VALUES (?, ?, ?)";
         $sth = $conn->prepare($sql);
         $sth->execute(array($type, $nom, $faction));
+
+        $sql = "SELECT MAX(idItem) AS id FROM item";
+        $sth = $conn->prepare($sql);
+        $sth->execute(array());
+        $resultat = $sth->fetchObject();
+
+        foreach ($recette as $element)
+        {
+            $sql = "INSERT INTO recette (idItem, idItemRessource, qteItem) VALUES (?, ?, ?)";
+            $sth = $conn->prepare($sql);
+            $sth->execute(array($resultat->id, $element["idItem"], $element["qteItem"]));
+        }
     }
 }
 ?>

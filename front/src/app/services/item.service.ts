@@ -22,6 +22,11 @@ export class ItemService
     return this.http.get<TypeItem[]>(`${environment.url}/typeItem/listerTypeItem.php`);
   }
 
+  ListerRessource(): Observable<any[]>
+  {
+    return this.http.get<any[]>(`${environment.url}/item/listerRessource.php`);
+  }
+
   AjouterItem(_info): Observable<any>
   {
     return this.http.post(`${environment.url}/item/ajouterItem.php`, _info);

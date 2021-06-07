@@ -26,7 +26,8 @@
       <!-- nom objet -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Nom</mat-label>
-        <input #nom matInput [name]="element.nameObj" type="text" placeholder="Nom de l'objet" maxlength="50" ngModel required>
+        <input #nom matInput [name]="element.nameObj" type="text" placeholder="Nom de l'objet" maxlength="50" ngModel
+          required>
         <mat-hint align="end">{{ nom.value.length }} / 50</mat-hint>
       </mat-form-field>
 
@@ -34,8 +35,55 @@
 
       <!-- faction -->
       <mat-radio-group color="primary" [name]="element.nameCheck" ngModel required>
-        <mat-radio-button *ngFor="let element of listeFaction" [value]="element.idFaction">{{ element.nomFaction }}</mat-radio-button>
+        <mat-radio-button *ngFor="let element of listeFaction" [value]="element.idFaction">
+          {{ element.nomFaction }}
+        </mat-radio-button>
       </mat-radio-group>
+
+      <br><br>
+
+      <!-- liste des materiaux -->
+      <mat-accordion class="full-width">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Liste des materiaux
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Qte</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let element of listeRessource">
+                <th scope="row">{{ element.nomItem }}</th>
+                <td>
+                  <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Quantité: </mat-label>
+                    <input #qte matInput name="nbObj" type="number">
+                  </mat-form-field>
+                </td>
+                <td>
+                  <button mat-fab *ngIf="!ItemEstDansRecette(i, element.idItem)" color="primary" matTooltip="Ajouter"
+                    (click)="AjouterItemRecette(i, element.idItem, qte.value)">
+                    <mat-icon>add</mat-icon>
+                  </button>
+
+                  <button mat-fab *ngIf="ItemEstDansRecette(i, element.idItem)" color="warn" matTooltip="Supprimer"
+                    (click)="SupprimerItemRecette(i, element.idItem, qte)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
   </form>
 
