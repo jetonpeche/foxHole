@@ -62,6 +62,7 @@ import { AjoutPseudoComponent } from './modals/ajout-pseudo/ajout-pseudo.compone
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HistoriqueJournalierComponent } from './components/historique-journalier/historique-journalier.component';
 import { HistoriqueGlobalComponent } from './components/historique-global/historique-global.component';
+import { RecetteComponent } from './components/recette/recette.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { HistoriqueGlobalComponent } from './components/historique-global/histor
     AjoutPseudoComponent,
     HistoriqueComponent,
     HistoriqueJournalierComponent,
-    HistoriqueGlobalComponent
+    HistoriqueGlobalComponent,
+    RecetteComponent
   ],
   imports: [
     BrowserModule,
