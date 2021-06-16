@@ -10,29 +10,34 @@
     <input matInput #inputFiltre type="text" (keyup)="FiltrerTableau(inputFiltre.value)">
   </mat-form-field>
 
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Nom</th>
-        <th scope="col">Recette</th>
-        <th scope="col">Quantité</th>
-        <th scope="col">Mass factory</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let element of listeRecette; let i = index">
-        <th scope="row">{{ element.nomItem }}</th>
-        <td>{{ AfficherQteRecette(i, +qteInput.value, checkbox.checked) }}</td>
-        <td>
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Quantité</mat-label>
-            <input matInput #qteInput type="number">
-          </mat-form-field>
-        </td>
-        <td>
-          <mat-checkbox [hidden]="!EstDansMassFactory(i)" #checkbox color="primary" class="example-margin">Mass factory !</mat-checkbox>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <mat-spinner *ngIf="listeRecette.length == 0"></mat-spinner>
+
+  <mat-card *ngIf="listeRecette.length != 0">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Nom</th>
+          <th scope="col">Recette</th>
+          <th scope="col">Quantité</th>
+          <th scope="col">Mass factory</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let element of listeRecette; let i = index">
+          <th scope="row">{{ element.nomItem }}</th>
+          <td>{{ AfficherQteRecette(i, +qteInput.value, checkbox.checked) }}</td>
+          <td>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Quantité</mat-label>
+              <input matInput #qteInput type="number">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-checkbox [hidden]="!EstDansMassFactory(i)" #checkbox color="primary" class="example-margin">Mass
+              factory !</mat-checkbox>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-card>
 </div>

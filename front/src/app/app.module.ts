@@ -32,6 +32,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // components
 import { FactoryComponent } from './components/factory/factory.component';
@@ -113,6 +114,7 @@ import { RecetteComponent } from './components/recette/recette.component';
     MatAutocompleteModule,
     ReactiveFormsModule,
     MatExpansionModule,
+    MatProgressSpinnerModule,
     ToastrModule.forRoot(
       {
         timeOut: 4000,

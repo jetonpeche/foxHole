@@ -1,10 +1,10 @@
 <div class="titre">
-    <h2>Historique du {{ dateJour |date:'dd/MM/yyyy' }}</h2>
-    <button mat-raised-button (click)="SupprimerHistoriqueGlobal()" color="primary">Supprimer historique global</button>&nbsp;
+    <h2>{{ titre }}</h2>
+    <button mat-raised-button (click)="SupprimerHistoriqueGlobal()" color="primary">Supprimer historique global</button>
     <br><br>
 </div>
 
-<mat-tab-group>
+<mat-tab-group (selectedTabChange)="MatTab($event)">
     <mat-tab label="Journalier">
         <app-historique-journalier></app-historique-journalier>
     </mat-tab>

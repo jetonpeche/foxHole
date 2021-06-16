@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { HistoriqueGlobalComponent } from '../historique-global/historique-global.component';
 
 @Component({
@@ -9,11 +10,13 @@ import { HistoriqueGlobalComponent } from '../historique-global/historique-globa
 export class HistoriqueComponent implements OnInit, AfterViewInit
 {
   @ViewChild(HistoriqueGlobalComponent) histoGcomp: HistoriqueGlobalComponent;
-  dateJour: Date;
+  dateJour: Date = new Date;
+
+  titre: string = "Historique du " + this.dateJour.getDate() + "/" + this.dateJour.getMonth() + "/" + this.dateJour.getFullYear();
 
   constructor(private elementRef: ElementRef) { }
 
-  ngOnInit(): void 
+  ngOnInit(): void
   {
     this.dateJour = new Date();
   }
@@ -26,5 +29,11 @@ export class HistoriqueComponent implements OnInit, AfterViewInit
   SupprimerHistoriqueGlobal(): void
   {
     this.histoGcomp.SupprimerHistoriqueGlobal();
+  }
+
+  MatTab(event: MatTabChangeEvent): void
+  {
+    this.titre = event.index == 0 ?
+    "Historique du " + this.dateJour.getDate() + "/" + this.dateJour.getMonth() + "/" + this.dateJour.getFullYear() :"Historique global";
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { ItemService } from 'src/app/services/item.service';
 import { environment } from 'src/environments/environment';
@@ -8,13 +8,13 @@ import { environment } from 'src/environments/environment';
   templateUrl: './recette.component.html',
   styleUrls: ['./recette.component.css']
 })
-export class RecetteComponent implements OnInit 
+export class RecetteComponent implements OnInit, AfterViewInit 
 {
   listeRecette: any[] = [];
 
   private listeRecetteClone: any[] = [];
 
-  constructor(private itemService: ItemService, private toastrServ: ToastrService) { }
+  constructor(private itemService: ItemService, private toastrServ: ToastrService, private elementRef: ElementRef) { }
 
   ngOnInit(): void 
   {
@@ -28,6 +28,11 @@ export class RecetteComponent implements OnInit
         this.toastrServ.error(environment.msgHttp, "Erreur réseau");
       }
     );
+  }
+
+  ngAfterViewInit(): void
+  {
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = "#D9D9D9";
   }
 
   EstDansMassFactory(_index: number): boolean
@@ -79,8 +84,6 @@ export class RecetteComponent implements OnInit
 
   FiltrerTableau(_text: string): void
   {
-    // premiere lettre en majuscule
-    _text = _text.charAt(0).toUpperCase() + _text.slice(1);
-    this.listeRecette = this.listeRecetteClone.filter(recette => recette.nomItem.startsWith(_text));  
+    this.listeRecette = this.listeRecetteClone.filter(recette => recette.nomItem.toLowerCase().startsWith(_text.toLowerCase()));  
   }
 }
