@@ -1,6 +1,6 @@
 # Projet foxhole
 
-## Gestion de la logistique pour le jeu vidéo Foxhole
+## Gestion de la logistique pour le jeu vidéo Foxhole (n'est plus utilisé)
 
 - Création / suppression / modif / listing de liste des items à fabriquer
 - Ajouter des items dans la base de données quand il y en a un nouveau
@@ -12,3 +12,8 @@
 - Historique global et journalier des differents crafts des joueurs
 
 (Angular 12 / PHP 7 / MySQL)
+
+# Tester
+
+liens pour tester l'app:
+https://portfolionp.000webhostapp.com/foxhole/#/
